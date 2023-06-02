@@ -29,6 +29,13 @@
             {
               "client_id": "839056180853-7uilmg6sr7mqtic63835jk0apquructj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "839056180853-2dc7tjtdl6m8lgseci3po3fpnatbgq8p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.progettodd.progettoDd"
+              }
             }
           ]
         }
@@ -36,7 +43,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:839056180853:android:277949067b3750d6941a3c",
+        "mobilesdk_app_id": "1:839056180853:android:28f571ce069e312d941a3c",
         "android_client_info": {
           "package_name": "com.progettodd.progetto_dd"
         }
@@ -58,6 +65,13 @@
             {
               "client_id": "839056180853-7uilmg6sr7mqtic63835jk0apquructj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "839056180853-2dc7tjtdl6m8lgseci3po3fpnatbgq8p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.progettodd.progettoDd"
+              }
             }
           ]
         }
