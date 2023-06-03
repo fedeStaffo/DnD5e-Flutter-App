@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_dd/auth/logout_page.dart';
+import 'package:progetto_dd/pages/campaigns/home_campaigns.dart';
+import 'characters/home_character.dart';
 import 'info.dart';
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  User? get currentUser => _firebaseAuth.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +80,18 @@ class MyHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                width: 200,
-                child: Image.asset('assets/images/knight.png'),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeCharacter(userId: currentUser!.uid),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  width: 200,
+                  child: Image.asset('assets/images/knight.png'),
+                ),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -87,9 +102,18 @@ class MyHomePage extends StatelessWidget {
                     color: Colors.black),
               ),
               const SizedBox(height: 32),
-              SizedBox(
-                width: 200,
-                child: Image.asset('assets/images/treasure_map.png'),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeCampaigns(),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  width: 200,
+                  child: Image.asset('assets/images/treasure_map.png'),
+                ),
               ),
               const SizedBox(height: 16),
               const Text(

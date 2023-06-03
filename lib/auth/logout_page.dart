@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_dd/auth/auth.dart';
-import 'package:progetto_dd/auth/login_register_page.dart';
 
 class LogoutPage extends StatelessWidget {
   const LogoutPage({Key? key}) : super(key: key);

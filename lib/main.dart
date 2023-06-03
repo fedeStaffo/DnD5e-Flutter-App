@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:progetto_dd/widget_tree.dart';
 import 'package:progetto_dd/auth/login_register_page.dart';
-import 'package:progetto_dd/auth/reset_password_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
