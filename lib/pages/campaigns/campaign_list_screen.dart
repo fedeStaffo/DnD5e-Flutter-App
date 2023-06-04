@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../memory/campagna.dart';
+import '../../memory/campaign.dart';
+import '../../memory/campaign_card.dart';
 
 class CampaignListScreen extends StatefulWidget {
   @override
@@ -88,40 +89,4 @@ class _CampaignListScreenState extends State<CampaignListScreen> {
   }
 }
 
-class CampaignCard extends StatelessWidget {
-  final String? nome;
-  final String? masterId;
-  final String? masterNome;
 
-  CampaignCard({
-    this.nome,
-    this.masterId,
-    this.masterNome,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(
-          nome ?? '',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Master: ${masterNome ?? ''}',
-              style: const TextStyle(
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../memory/character_card.dart';
+
 class HomeCharacter extends StatelessWidget {
   final String userId;
 
@@ -53,44 +55,3 @@ class HomeCharacter extends StatelessWidget {
     );
   }
 }
-
-class CharacterCard extends StatelessWidget {
-  final String? nome;
-  final String? classe;
-  final String? razza;
-
-  CharacterCard({this.nome, this.classe, this.razza});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(
-          nome ?? '',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Classe: ${classe ?? ''}',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            Text(
-              'Razza: ${razza ?? ''}',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-

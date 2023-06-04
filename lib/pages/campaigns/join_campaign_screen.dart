@@ -9,9 +9,18 @@ class JoinCampaignScreen extends StatefulWidget {
 
 class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
   final TextEditingController _nomeCampagnaController = TextEditingController();
-  final TextEditingController _passwordCampagnaController =
-  TextEditingController();
-  String? _nomePersonaggioSelezionato; // Modificato il tipo in String?
+  final TextEditingController _passwordCampagnaController = TextEditingController();
+  String? _nomePersonaggioSelezionato;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeState();
+  }
+
+  void initializeState() {
+    _nomePersonaggioSelezionato = null;
+  }
 
   void _unisciti(BuildContext context) {
     final String nomeCampagna = _nomeCampagnaController.text;

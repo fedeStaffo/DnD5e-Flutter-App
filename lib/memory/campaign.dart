@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Campagna {
-  final String nome;
-  final String masterId;
-  final String masterNome;
-  final String password;
-  final List<String> partecipanti;
+  final String? nome;
+  final String? masterId;
+  final String? masterNome;
+  final String? password;
+  final List<String>? partecipanti;
 
   Campagna({
     required this.nome,

@@ -69,6 +69,18 @@ flutter:
     - assets/images/drawer_image.jpg
     - assets/images/info_image.webp
     - assets/images/forget_password_icon.png
+    - assets/images/drawer_campagna.png
+    - assets/images/casetta.png
+    - assets/images/dado.png
+    - assets/images/npc.png
+    - assets/images/libro_aperto.png
+    - assets/images/pozione.png
+    - assets/images/effetti.png
+    - assets/images/fabbro.png
+    - assets/images/penna_antica.png
+    - assets/images/password.png
+    - assets/images/john_wick.png
+    - assets/images/bombetta.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
