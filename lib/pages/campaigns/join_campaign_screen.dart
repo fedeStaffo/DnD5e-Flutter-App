@@ -32,14 +32,13 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
         .where('password', isEqualTo: passwordCampagna)
         .get()
         .then((snapshot) {
-      if (snapshot.docs.isEmpty) {
+      if (snapshot.size == 0) {
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
               title: const Text('Errore'),
-              content: const Text(
-                  'Controlla i campi inseriti'),
+              content: const Text('Controlla i campi inseriti'),
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
@@ -212,7 +211,13 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
                     return const Text('Nessun personaggio disponibile');
                   }
 
-                  return DropdownButtonFormField<String>(
+                  if (_nomePersonaggioSelezionato != null &&
+                      !_nomePersonaggioSelezionato!.isEmpty &&
+                      !personaggiDisponibili.contains(_nomePersonaggioSelezionato)) {
+                    _nomePersonaggioSelezionato = null;
+                  }
+
+                  return DropdownButton<String>(
                     items: personaggiDisponibili.map((personaggio) {
                       return DropdownMenuItem<String>(
                         value: personaggio,
@@ -225,9 +230,8 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
                         _nomePersonaggioSelezionato = value;
                       });
                     },
-                    decoration: const InputDecoration(
-                      labelText: 'Seleziona un personaggio',
-                    ),
+                    hint: const Text('Seleziona un personaggio'),
+                    isExpanded: true,
                   );
                 },
               ),
@@ -243,3 +247,4 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
     );
   }
 }
+
