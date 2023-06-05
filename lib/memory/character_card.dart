@@ -99,7 +99,16 @@ class CharacterCard extends StatelessWidget {
                         Text('Nome: ${personaggio.nome ?? ''}'),
                         Text('Razza: ${personaggio.razza ?? ''}'),
                         Text('Classe: ${personaggio.classe ?? ''}'),
-                        // Aggiungi gli altri campi desiderati
+                        Text('Vita Massima: ${personaggio.vitaMax ?? ''}'),
+                        Text('Vita Attuale: ${personaggio.vita ?? ''}'),
+                        Text('Classe Armatura: ${personaggio.classeArmatura ?? ''}'),
+                        Text('Forza: ${personaggio.forza ?? ''}'),
+                        Text('Intelligenza: ${personaggio.intelligenza ?? ''}'),
+                        Text('Costituzione: ${personaggio.costituzione ?? ''}'),
+                        Text('Saggezza: ${personaggio.saggezza ?? ''}'),
+                        Text('Carisma: ${personaggio.carisma ?? ''}'),
+                        Text('Destrezza: ${personaggio.destrezza ?? ''}'),
+                        Text('Allineamento: ${personaggio.allineamento ?? ''}'),
                       ],
                     ),
                     actions: [
