@@ -47,6 +47,7 @@ class HomeCharacter extends StatelessWidget {
                 nome: personaggio['nome'],
                 classe: personaggio['classe'],
                 razza: personaggio['razza'],
+                utenteId: userId,
               );
             },
           );

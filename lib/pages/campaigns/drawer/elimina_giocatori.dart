@@ -108,7 +108,7 @@ class _EliminaGiocatoriState extends State<EliminaGiocatori> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Seleziona il giocatore da eliminare dalla campagna',
               style: TextStyle(
                 fontSize: 18,
@@ -128,13 +128,13 @@ class _EliminaGiocatoriState extends State<EliminaGiocatori> {
                   value: value,
                   child: Text(
                     value,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
                 );
               }).toList(),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Giocatore',
               ),
             ),

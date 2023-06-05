@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:progetto_dd/auth/logout_page.dart';
 import 'package:progetto_dd/pages/campaigns/home_campaigns.dart';
+import 'package:progetto_dd/pages/profilo.dart';
 import 'characters/home_character.dart';
 import 'info.dart';
 
@@ -37,7 +38,11 @@ class MyHomePage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Profilo'),
               onTap: () {
-                // Azioni da eseguire quando "Profilo" viene selezionato
+                // Azioni da eseguire quando "Logout" viene selezionato
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profilo()),
+                );
               },
             ),
             ListTile(

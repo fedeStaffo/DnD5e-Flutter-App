@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:progetto_dd/pages/campaigns/home_campaigns.dart';
 import 'firebase_options.dart';
 import 'package:progetto_dd/widget_tree.dart';
 import 'package:progetto_dd/auth/login_register_page.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/login': (context) => LoginPage(),
+        '/home_campaigns': (context) => HomeCampaigns(),
       },
       home: const WidgetTree()
     );

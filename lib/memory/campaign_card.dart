@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../pages/campaigns/drawer/campaign_screen.dart';
 import 'campaign.dart';
 
