@@ -5,6 +5,7 @@ import 'package:progetto_dd/pages/campaigns/drawer/aggiorna_stato_personaggio.da
 import 'package:progetto_dd/pages/campaigns/drawer/aggiungi_equipaggiamento.dart';
 import 'package:progetto_dd/pages/campaigns/drawer/crea_npc.dart';
 import 'package:progetto_dd/pages/campaigns/drawer/crea_sessione.dart';
+import 'package:progetto_dd/pages/campaigns/drawer/dado.dart';
 import 'package:progetto_dd/pages/campaigns/drawer/elimina_campagna.dart';
 import 'package:progetto_dd/pages/campaigns/drawer/visualizza_npc.dart';
 import 'package:progetto_dd/pages/campaigns/drawer/visualizza_sessioni.dart';
@@ -67,7 +68,12 @@ class CampaignScreen extends StatelessWidget {
                 height: 24,
               ),
               onTap: () {
-                // Azione da eseguire per l'opzione 2
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Dado(),
+                  ),
+                );
               },
             ),
             ListTile(
