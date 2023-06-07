@@ -27,6 +27,7 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
             .where('campagna', isEqualTo: widget.campagna)
             .snapshots(),
         builder: (context, snapshot) {
+          // Gestisce gli errori durante il recupero delle sessioni
           if (snapshot.hasError) {
             return const Center(
               child: Text(
@@ -36,6 +37,7 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
             );
           }
 
+          // Mostra uno spinner di caricamento mentre si attende la connessione al database
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -44,6 +46,7 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
 
           final sessioniList = snapshot.data!.docs;
 
+          // Mostra un messaggio se non ci sono sessioni nella campagna
           if (sessioniList.isEmpty) {
             return const Center(
               child: Text(
@@ -53,6 +56,7 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
             );
           }
 
+          // Costruisce una ListView per visualizzare le sessioni
           return ListView.builder(
             itemCount: sessioniList.length,
             itemBuilder: (context, index) {
@@ -71,6 +75,7 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
                     style: const TextStyle(fontSize: 24),
                   ),
                   onTap: () {
+                    // Naviga alla schermata di dettaglio sessione passando i dati necessari
                     Navigator.push(
                       context,
                       MaterialPageRoute(

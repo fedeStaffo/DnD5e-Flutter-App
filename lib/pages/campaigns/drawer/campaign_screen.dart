@@ -22,7 +22,7 @@ class CampaignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    // Recupera l'utente corrente
     final User? user = _auth.currentUser;
     String? userId = user?.uid;
 
@@ -50,6 +50,7 @@ class CampaignScreen extends StatelessWidget {
                 height: 24,
               ),
               onTap: () {
+                // Naviga alla stessa schermata della campagna
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -68,6 +69,7 @@ class CampaignScreen extends StatelessWidget {
                 height: 24,
               ),
               onTap: () {
+                // Naviga alla schermata del dado
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -84,6 +86,7 @@ class CampaignScreen extends StatelessWidget {
                 height: 24,
               ),
               onTap: () {
+                // Naviga alla schermata di visualizzazione degli NPC
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -102,6 +105,7 @@ class CampaignScreen extends StatelessWidget {
                 height: 24,
               ),
               onTap: () {
+                // Naviga alla schermata di visualizzazione delle sessioni
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -123,6 +127,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di creazione di un nuovo NPC
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -142,6 +147,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di creazione di una nuova sessione
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -161,6 +167,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di aggiornamento dello stato del personaggio
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -179,6 +186,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di aggiunta di un nuovo equipaggiamento
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -201,6 +209,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di reset della password della campagna
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -220,6 +229,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di eliminazione dei giocatori dalla campagna
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -238,6 +248,7 @@ class CampaignScreen extends StatelessWidget {
                   height: 24,
                 ),
                 onTap: () {
+                  // Naviga alla schermata di eliminazione della campagna
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -290,22 +301,26 @@ class CampaignScreen extends StatelessWidget {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
+                    // Visualizza un messaggio di errore
                     return const Text('Si è verificato un errore.');
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
+                    // Visualizza un indicatore di caricamento
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
 
                   if (!snapshot.hasData) {
+                    // Se non ci sono dati, visualizza un messaggio di nessun personaggio trovato
                     return const Text('Nessun personaggio trovato.');
                   }
 
                   final personaggi = snapshot.data!.docs;
 
                   if (personaggi.isEmpty) {
+                    // Se la lista dei personaggi è vuota, visualizza un messaggio di nessun personaggio trovato
                     return const Text('Nessun personaggio trovato.');
                   }
 

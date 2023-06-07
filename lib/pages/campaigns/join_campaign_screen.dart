@@ -26,6 +26,7 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
     final String nomeCampagna = _nomeCampagnaController.text;
     final String passwordCampagna = _passwordCampagnaController.text;
 
+    // Cerca la campagna nel database
     FirebaseFirestore.instance
         .collection('campagne')
         .where('nome', isEqualTo: nomeCampagna)
@@ -33,6 +34,7 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
         .get()
         .then((snapshot) {
       if (snapshot.size == 0) {
+        // Campagna non trovata, mostra un messaggio di errore
         showDialog(
           context: context,
           builder: (context) {
@@ -53,14 +55,13 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
 
       final campagnaDocument = snapshot.docs[0];
       final campagnaId = campagnaDocument.id;
-      final partecipanti =
-      campagnaDocument.get('partecipanti') as List<dynamic>;
+      final partecipanti = campagnaDocument.get('partecipanti') as List<dynamic>;
 
       final userId = FirebaseAuth.instance.currentUser?.uid;
-      final campagnaMasterId =
-      campagnaDocument.get('masterId') as String;
+      final campagnaMasterId = campagnaDocument.get('masterId') as String;
 
       if (partecipanti.contains(userId)) {
+        // L'utente fa già parte di questa campagna, mostra un messaggio di errore
         showDialog(
           context: context,
           builder: (context) {
@@ -80,6 +81,7 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
       }
 
       if (userId == campagnaMasterId) {
+        // L'utente è già il master di questa campagna, mostra un messaggio di errore
         showDialog(
           context: context,
           builder: (context) {
@@ -102,11 +104,10 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
         'partecipanti': FieldValue.arrayUnion([userId]),
       };
 
-      if (_nomePersonaggioSelezionato != null &&
-          _nomePersonaggioSelezionato!.isNotEmpty) {
-        updates['personaggi'] =
-            FieldValue.arrayUnion([_nomePersonaggioSelezionato]);
+      if (_nomePersonaggioSelezionato != null && _nomePersonaggioSelezionato!.isNotEmpty) {
+        updates['personaggi'] = FieldValue.arrayUnion([_nomePersonaggioSelezionato]);
 
+        // Aggiorna il campo 'campagna' nel documento del personaggio selezionato
         FirebaseFirestore.instance
             .collection('personaggi')
             .where('nome', isEqualTo: _nomePersonaggioSelezionato)
@@ -118,11 +119,13 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
         });
       }
 
+      // Aggiorna la campagna nel database con i nuovi partecipanti e personaggi
       FirebaseFirestore.instance
           .collection('campagne')
           .doc(campagnaId)
           .update(updates)
           .then((_) {
+        // Mostra un messaggio di successo
         showDialog(
           context: context,
           builder: (context) {
@@ -139,13 +142,13 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
           },
         );
       }).catchError((error) {
+        // Si è verificato un errore durante l'aggiornamento della campagna, mostra un messaggio di errore
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
               title: const Text('Errore'),
-              content: const Text(
-                  'Si è verificato un errore durante l\'unione alla campagna'),
+              content: const Text('Si è verificato un errore durante l\'unione alla campagna'),
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
@@ -187,17 +190,18 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
                 stream: FirebaseFirestore.instance
                     .collection('personaggi')
                     .where('campagna', isEqualTo: '')
-                    .where('utenteId',
-                    isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                    .where('utenteId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
+                    // Si è verificato un errore durante il recupero dei personaggi disponibili
                     return const Center(
                       child: Text('Si è verificato un errore.'),
                     );
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
+                    // In attesa del caricamento dei personaggi disponibili
                     return const CircularProgressIndicator();
                   }
 
@@ -206,14 +210,15 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
                       .toSet()
                       .toList();
 
-                  if (personaggiDisponibili == null ||
-                      personaggiDisponibili.isEmpty) {
+                  if (personaggiDisponibili == null || personaggiDisponibili.isEmpty) {
+                    // Nessun personaggio disponibile
                     return const Text('Nessun personaggio disponibile');
                   }
 
                   if (_nomePersonaggioSelezionato != null &&
                       !_nomePersonaggioSelezionato!.isEmpty &&
                       !personaggiDisponibili.contains(_nomePersonaggioSelezionato)) {
+                    // Il personaggio selezionato non è più disponibile
                     _nomePersonaggioSelezionato = null;
                   }
 
@@ -247,4 +252,3 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
     );
   }
 }
-

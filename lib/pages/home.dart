@@ -27,7 +27,7 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             DrawerHeader(
               decoration: const BoxDecoration(
-                color: Colors.blue,
+                color: Colors.white,
               ),
               child: Image.asset(
                 'assets/images/drawer_image.jpg',
@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Profilo'),
               onTap: () {
-                // Azioni da eseguire quando "Logout" viene selezionato
+                // Azioni da eseguire quando "Profilo" viene selezionato
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Profilo()),
@@ -87,6 +87,7 @@ class MyHomePage extends StatelessWidget {
             children: <Widget>[
               InkWell(
                 onTap: () {
+                  // Azioni da eseguire quando viene selezionato "Personaggi"
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomeCharacter(userId: currentUser!.uid),
@@ -109,6 +110,7 @@ class MyHomePage extends StatelessWidget {
               const SizedBox(height: 32),
               InkWell(
                 onTap: () {
+                  // Azioni da eseguire quando viene selezionato "Campagne"
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => HomeCampaigns(),

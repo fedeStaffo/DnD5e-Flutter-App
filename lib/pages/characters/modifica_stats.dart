@@ -19,9 +19,9 @@ class ModificaStatsFragment extends StatefulWidget {
 }
 
 class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
-  String? campoSelezionato;
-  String? statoSelezionato;
-  TextEditingController modificheController = TextEditingController();
+  String? campoSelezionato; // Campo selezionato dall'utente
+  String? statoSelezionato; // Stato selezionato dall'utente
+  TextEditingController modificheController = TextEditingController(); // Controller per l'input delle modifiche
 
   List<String> campiPersonaggio = [
     'Forza',
@@ -34,7 +34,7 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
     'VitaMax',
     'Stato',
     'Classe Armatura',
-  ];
+  ]; // Lista dei campi disponibili per il personaggio
 
   List<String> statiPersonaggio = [
     'Accecato',
@@ -52,9 +52,9 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
     'Stordito',
     'Trattenuto',
     'Nessuno',
-  ];
+  ]; // Lista degli stati disponibili per il personaggio
 
-  String? errorMessage;
+  String? errorMessage; // Messaggio di errore da mostrare all'utente
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +67,10 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
         child: Column(
           children: [
             DropdownButtonFormField<String>(
-              value: campoSelezionato,
+              value: campoSelezionato, // Valore selezionato dal dropdown
               onChanged: (newValue) {
                 setState(() {
-                  campoSelezionato = newValue;
+                  campoSelezionato = newValue; // Aggiorna il campo selezionato
                 });
               },
               items: campiPersonaggio.map((campo) {
@@ -94,7 +94,7 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
                 campoSelezionato == 'Carisma' ||
                 campoSelezionato == 'Classe Armatura')
               TextFormField(
-                controller: modificheController,
+                controller: modificheController, // Collega il controller all'input field
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Modifiche',
@@ -105,7 +105,7 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
               DropdownButtonFormField<String>(
                 onChanged: (newValue) {
                   setState(() {
-                    statoSelezionato = newValue;
+                    statoSelezionato = newValue; // Aggiorna lo stato selezionato
                   });
                 },
                 items: statiPersonaggio.map((stato) {
@@ -234,7 +234,7 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
 
     if (campo == 'Classe Armatura') {
       campoFirestore = 'classeArmatura'; // Aggiorna il campo Firestore per la classe armatura
-      campo = statoSelezionato;
+      campo = statoSelezionato; // Aggiorna il campo selezionato con lo stato selezionato
     } else {
       campoFirestore = campo.toLowerCase(); // Converte il campo selezionato in minuscolo per altri campi
     }
@@ -250,29 +250,29 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
         campo == 'Saggezza' ||
         campo == 'Carisma' ||
         campo == 'Classe Armatura') {
-      modificheValueNum = int.tryParse(modifiche) ?? 0;
+      modificheValueNum = int.tryParse(modifiche) ?? 0; // Converte le modifiche in un numero intero
     }
 
     // Cerca il personaggio utilizzando nome, classe e razza come criteri di ricerca
     FirebaseFirestore.instance
         .collection('personaggi')
-        .where('nome', isEqualTo: widget.nome)
-        .where('classe', isEqualTo: widget.classe)
-        .where('razza', isEqualTo: widget.razza)
-        .where('utenteId', isEqualTo: widget.utenteId)
+        .where('nome', isEqualTo: widget.nome) // Cerca per nome
+        .where('classe', isEqualTo: widget.classe) // Cerca per classe
+        .where('razza', isEqualTo: widget.razza) // Cerca per razza
+        .where('utenteId', isEqualTo: widget.utenteId) // Cerca per ID utente
         .get()
         .then((QuerySnapshot snapshot) {
       if (snapshot.docs.isNotEmpty) {
-        final DocumentSnapshot personaggio = snapshot.docs.first;
+        final DocumentSnapshot personaggio = snapshot.docs.first; // Ottieni il primo personaggio trovato
 
         // Aggiorna il campo selezionato con le modifiche nel personaggio trovato
         if (modificheValueNum != null) {
           personaggio.reference.update({
-            campoFirestore: modificheValueNum,
+            campoFirestore: modificheValueNum, // Aggiorna il campo Firestore con le modifiche numeriche
           });
         } else {
           personaggio.reference.update({
-            campoFirestore: modifiche,
+            campoFirestore: modifiche, // Aggiorna il campo Firestore con le modifiche testuali
           });
         }
 
@@ -334,7 +334,4 @@ class _ModificaStatsFragmentState extends State<ModificaStatsFragment> {
       );
     });
   }
-
-
 }
-

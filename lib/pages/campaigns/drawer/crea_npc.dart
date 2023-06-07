@@ -32,6 +32,7 @@ class _CreaNpcState extends State<CreaNpc> {
     'Patrono',
   ];
 
+  // Funzione per creare un NPC
   void _creaNpc() async {
     final String nome = _nomeController.text;
     final String legame = _legameSelezionato ?? '';
@@ -39,6 +40,7 @@ class _CreaNpcState extends State<CreaNpc> {
     final String? campagna = widget.campagna;
     final String? master = widget.masterId;
 
+    // Controllo se tutti i campi sono stati riempiti
     if (nome.isEmpty || legame.isEmpty || descrizione.isEmpty) {
       showDialog(
         context: context,
@@ -58,6 +60,7 @@ class _CreaNpcState extends State<CreaNpc> {
       return;
     }
 
+    // Controllo se esiste già un NPC con lo stesso nome nella stessa campagna
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('npc')
         .where('campagna', isEqualTo: campagna)
@@ -83,6 +86,7 @@ class _CreaNpcState extends State<CreaNpc> {
       return;
     }
 
+    // Creazione dei dati del NPC
     final npcData = {
       'nome': nome,
       'legame': legame,
@@ -91,11 +95,13 @@ class _CreaNpcState extends State<CreaNpc> {
       'master': master,
     };
 
+    // Aggiunta del NPC al database
     FirebaseFirestore.instance.collection('npc').add(npcData).then((_) {
       _nomeController.clear();
       _legameSelezionato = null;
       _descrizioneController.clear();
 
+      // Mostra un dialogo di successo
       showDialog(
         context: context,
         builder: (context) {
@@ -112,6 +118,7 @@ class _CreaNpcState extends State<CreaNpc> {
         },
       );
     }).catchError((error) {
+      // Mostra un dialogo di errore in caso di fallimento
       showDialog(
         context: context,
         builder: (context) {
@@ -129,7 +136,6 @@ class _CreaNpcState extends State<CreaNpc> {
       );
     });
   }
-
 
   @override
   Widget build(BuildContext context) {

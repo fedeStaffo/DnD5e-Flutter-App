@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:progetto_dd/auth/auth.dart';
 import 'package:progetto_dd/auth/reset_password_page.dart';
 
+import '../pages/home.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -17,12 +19,15 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
+  bool passwordObscured = true;
 
+  // Funzione per effettuare l'accesso con email e password
   Future<void> signInWithEmailAndPassword() async {
     try {
       final email = _controllerEmail.text.trim();
       final password = _controllerPassword.text.trim();
 
+      // Verifica che email e password non siano vuote o contengano spazi
       if (email.isEmpty || password.isEmpty || email.contains(' ') || password.contains(' ')) {
         setState(() {
           errorMessage = 'Inserisci una email e una password valide.';
@@ -30,9 +35,16 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
+      // Effettua l'accesso utilizzando la classe Auth
       await Auth().signInWithEmailAndPassword(
         email: email,
         password: password,
+      );
+
+      // Naviga alla MyHomePage dopo un accesso avvenuto con successo
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage(title: 'Scheda D&D 5e')),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -41,11 +53,14 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+
+  // Funzione per creare un nuovo account con email e password
   Future<void> createUserWithEmailAndPassword() async {
     try {
       final email = _controllerEmail.text.trim();
       final password = _controllerPassword.text.trim();
 
+      // Verifica che email e password non siano vuote o contengano spazi
       if (email.isEmpty || password.isEmpty || email.contains(' ') || password.contains(' ')) {
         setState(() {
           errorMessage = 'Inserisci una email e una password valide.';
@@ -53,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
+      // Verifica che l'email contenga il simbolo @
       if (!email.contains('@')) {
         setState(() {
           errorMessage = 'Inserisci un\'email valida.';
@@ -60,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
+      // Crea un nuovo account utilizzando la classe Auth
       await Auth().createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -75,15 +92,28 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  // Widget per il campo di input di testo
   Widget _entryField(String title, TextEditingController controller) {
     return TextField(
       controller: controller,
+      obscureText: title == 'Password' ? passwordObscured : false,
       decoration: InputDecoration(
         labelText: title,
+        suffixIcon: title == 'Password'
+            ? IconButton(
+          onPressed: () {
+            setState(() {
+              passwordObscured = !passwordObscured;
+            });
+          },
+          icon: Icon(passwordObscured ? Icons.visibility : Icons.visibility_off),
+        )
+            : null,
       ),
     );
   }
 
+  // Widget per il messaggio di errore
   Widget _errorMessage() {
     return Text(
       errorMessage == '' ? '' : 'Oops! $errorMessage',
@@ -91,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Widget per il messaggio di successo
   Widget _successMessage() {
     if (isRegistered) {
       return Text(
@@ -102,6 +133,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  // Widget per il pulsante di invio
   Widget _submitButton() {
     return ElevatedButton(
       onPressed: isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
@@ -109,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Widget per il pulsante di login o registrazione
   Widget _loginOrRegisterButton() {
     return TextButton(
       onPressed: () {
@@ -127,6 +160,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Widget per il pulsante di reset della password
   Widget _resetPasswordButton() {
     return TextButton(
       onPressed: (){

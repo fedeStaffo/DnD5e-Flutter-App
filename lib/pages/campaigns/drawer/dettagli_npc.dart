@@ -23,6 +23,7 @@ class NpcDettagli extends StatelessWidget {
             .where('nome', isEqualTo: nome)
             .snapshots(),
         builder: (context, snapshot) {
+          // Controllo degli errori
           if (snapshot.hasError) {
             return const Center(
               child: Text(
@@ -32,6 +33,7 @@ class NpcDettagli extends StatelessWidget {
             );
           }
 
+          // Controllo dello stato di connessione
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -40,6 +42,7 @@ class NpcDettagli extends StatelessWidget {
 
           final npcList = snapshot.data!.docs;
 
+          // Controllo se l'NPC è stato trovato
           if (npcList.isEmpty) {
             return const Center(
               child: Text(

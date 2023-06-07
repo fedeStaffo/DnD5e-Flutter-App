@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:progetto_dd/pages/characters/background.dart';
+import 'package:progetto_dd/pages/characters/info_classe_razza.dart';
 import 'package:progetto_dd/pages/characters/inventario.dart';
 import 'package:progetto_dd/pages/characters/statistiche.dart';
+import 'magie.dart';
 
 class VisualizzaPersonaggio extends StatefulWidget {
   final String? nome;
@@ -23,12 +25,12 @@ class VisualizzaPersonaggio extends StatefulWidget {
 class _VisualizzaPersonaggioState extends State<VisualizzaPersonaggio> {
   int _currentIndex = 0;
 
-
   final List<Widget> _screens = [];
 
   @override
   void initState() {
     super.initState();
+    // Aggiunge le schermate corrispondenti agli indici della navigazione inferiore alla lista _screens
     _screens.add(
       StatisticheScreen(
         nome: widget.nome,
@@ -38,7 +40,15 @@ class _VisualizzaPersonaggioState extends State<VisualizzaPersonaggio> {
       ),
     );
     _screens.add(
-      InventrioScreen(
+      InventarioScreen(
+        nome: widget.nome,
+        classe: widget.classe,
+        razza: widget.razza,
+        utenteId: widget.utenteId,
+      ),
+    );
+    _screens.add(
+      MagieScreen(
         nome: widget.nome,
         classe: widget.classe,
         razza: widget.razza,
@@ -53,7 +63,14 @@ class _VisualizzaPersonaggioState extends State<VisualizzaPersonaggio> {
         utenteId: widget.utenteId,
       ),
     );
-    // Aggiungi qui gli altri screen alla lista _screens se necessario
+    _screens.add(
+      InfoCRScreen(
+        nome: widget.nome,
+        classe: widget.classe,
+        razza: widget.razza,
+        utenteId: widget.utenteId,
+      ),
+    );
   }
 
   @override
@@ -62,12 +79,12 @@ class _VisualizzaPersonaggioState extends State<VisualizzaPersonaggio> {
       appBar: AppBar(
         title: Text('Visualizza Personaggio'),
       ),
-      body: _screens[_currentIndex],
+      body: _screens[_currentIndex], // Mostra la schermata corrispondente all'indice corrente
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: _currentIndex, // Imposta l'indice corrente per la navigazione inferiore
         onTap: (index) {
           setState(() {
-            _currentIndex = index;
+            _currentIndex = index; // Cambia l'indice corrente quando viene premuta una voce di navigazione
           });
         },
         items: [

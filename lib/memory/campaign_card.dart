@@ -3,9 +3,9 @@ import '../pages/campaigns/drawer/campaign_screen.dart';
 import 'campaign.dart';
 
 class CampaignCard extends StatelessWidget {
-  final String? nome;
-  final String? masterId;
-  final String? masterNome;
+  final String? nome; // Nome della campagna
+  final String? masterId; // ID del master della campagna
+  final String? masterNome; // Nome del master della campagna
 
   CampaignCard({
     this.nome,
@@ -16,14 +16,14 @@ class CampaignCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: InkWell( // Aggiunta di InkWell come genitore
+      child: InkWell( // Aggiunta di InkWell come genitore per renderlo cliccabile
         onTap: () {
           // Azione da eseguire al clic sulla campagna
           _navigateToCampaign(context);
         },
         child: ListTile(
           title: Text(
-            nome ?? '',
+            nome ?? '', // Visualizza il nome della campagna, se presente
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
@@ -33,7 +33,7 @@ class CampaignCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Master: ${masterNome ?? ''}',
+                'Master: ${masterNome ?? ''}', // Visualizza il nome del master della campagna, se presente
                 style: const TextStyle(
                   fontSize: 18,
                 ),

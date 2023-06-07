@@ -20,6 +20,7 @@ class _EliminaGiocatoriState extends State<EliminaGiocatori> {
     _fetchGiocatori();
   }
 
+  // Recupera i giocatori associati alla campagna
   void _fetchGiocatori() {
     FirebaseFirestore.instance
         .collection('campagne')
@@ -38,6 +39,7 @@ class _EliminaGiocatoriState extends State<EliminaGiocatori> {
     });
   }
 
+  // Elimina il giocatore selezionato dalla campagna
   void _eliminaGiocatore() {
     FirebaseFirestore.instance
         .collection('campagne')
@@ -65,7 +67,7 @@ class _EliminaGiocatoriState extends State<EliminaGiocatori> {
           'partecipanti': partecipanti,
           'personaggi': personaggi,
         }).then((_) {
-          // Setta a nullo il campo "campagna" del personaggio
+          // Imposta il campo "campagna" del personaggio a null
           FirebaseFirestore.instance
               .collection('personaggi')
               .where('nome', isEqualTo: selectedGiocatore)

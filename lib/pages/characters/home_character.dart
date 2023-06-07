@@ -12,42 +12,42 @@ class HomeCharacter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('I Miei Personaggi'),
+        title: const Text('I Miei Personaggi'), // Titolo dell'appbar
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('personaggi')
             .where('utenteId', isEqualTo: userId)
-            .snapshots(),
+            .snapshots(), // Stream che ascolta le modifiche alla collezione 'personaggi' filtrata per l'utente corrente
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
-              child: Text('Si è verificato un errore.'),
+              child: Text('Si è verificato un errore.'), // Messaggio di errore se si verifica un errore nello stream
             );
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(), // Indicatore di caricamento se lo stream è in attesa
             );
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(
-              child: Text('Nessun personaggio trovato.'),
+              child: Text('Nessun personaggio trovato.'), // Messaggio se non ci sono dati o se la collezione è vuota
             );
           }
 
           return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
+            itemCount: snapshot.data!.docs.length, // Numero di elementi nella collezione
             itemBuilder: (context, index) {
-              final personaggio = snapshot.data!.docs[index];
+              final personaggio = snapshot.data!.docs[index]; // Ottiene il documento del personaggio corrente
 
               return CharacterCard(
-                nome: personaggio['nome'],
-                classe: personaggio['classe'],
-                razza: personaggio['razza'],
-                utenteId: userId,
+                nome: personaggio['nome'], // Passa il nome del personaggio al widget CharacterCard
+                classe: personaggio['classe'], // Passa la classe del personaggio al widget CharacterCard
+                razza: personaggio['razza'], // Passa la razza del personaggio al widget CharacterCard
+                utenteId: userId, // Passa l'ID dell'utente al widget CharacterCard
               );
             },
           );

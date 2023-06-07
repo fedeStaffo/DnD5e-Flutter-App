@@ -7,6 +7,7 @@ class EliminaCampagna extends StatelessWidget {
 
   EliminaCampagna({required this.campagnaNome, required this.masterId});
 
+  // Funzione per eliminare gli NPC associati alla campagna
   void _eliminaNPC() {
     FirebaseFirestore.instance
         .collection('npc')
@@ -21,6 +22,7 @@ class EliminaCampagna extends StatelessWidget {
     });
   }
 
+  // Funzione per eliminare le sessioni associate alla campagna
   void _eliminaSessioni() {
     FirebaseFirestore.instance
         .collection('sessioni')
@@ -35,6 +37,7 @@ class EliminaCampagna extends StatelessWidget {
     });
   }
 
+  // Funzione per aggiornare i personaggi associati alla campagna
   void _aggiornaPersonaggi() {
     FirebaseFirestore.instance
         .collection('personaggi')
@@ -51,6 +54,7 @@ class EliminaCampagna extends StatelessWidget {
     });
   }
 
+  // Funzione per eliminare la campagna
   void _eliminaCampagna(BuildContext context) {
     FirebaseFirestore.instance
         .collection('campagne')
@@ -77,6 +81,7 @@ class EliminaCampagna extends StatelessWidget {
     });
   }
 
+  // Funzione per mostrare il dialog di conferma
   void _mostraDialogConferma(BuildContext context) {
     showDialog(
       context: context,
@@ -104,6 +109,7 @@ class EliminaCampagna extends StatelessWidget {
     );
   }
 
+  // Funzione per confermare l'eliminazione della campagna
   void _confermaEliminazione(BuildContext context) {
     _eliminaNPC();
     _eliminaSessioni();

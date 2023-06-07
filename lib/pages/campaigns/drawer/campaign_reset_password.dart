@@ -12,13 +12,13 @@ class CampaignResetPassword extends StatefulWidget {
 }
 
 class _CampaignResetPasswordState extends State<CampaignResetPassword> {
-  final TextEditingController _newPasswordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController(); // Controller per il campo di testo della nuova password
+  final TextEditingController _confirmPasswordController = TextEditingController(); // Controller per il campo di testo di conferma della nuova password
 
-  String? _newPasswordErrorText;
-  String? _confirmPasswordErrorText;
+  String? _newPasswordErrorText; // Testo di errore per la nuova password
+  String? _confirmPasswordErrorText; // Testo di errore per la conferma della nuova password
 
-  String? passwordPrecedente;
+  String? passwordPrecedente; // Password precedente
 
   @override
   void dispose() {
@@ -30,10 +30,11 @@ class _CampaignResetPasswordState extends State<CampaignResetPassword> {
   @override
   void initState() {
     super.initState();
-    _fetchPasswordPrecedente();
+    _fetchPasswordPrecedente(); // Recupera la password precedente dal database
   }
 
   void _fetchPasswordPrecedente() {
+    // Recupera la password precedente dal database
     FirebaseFirestore.instance
         .collection('campagne')
         .where('nome', isEqualTo: widget.campagnaNome)
@@ -89,7 +90,6 @@ class _CampaignResetPasswordState extends State<CampaignResetPassword> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,14 +101,14 @@ class _CampaignResetPasswordState extends State<CampaignResetPassword> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Password precedente: ${passwordPrecedente ?? 'N/A'}'),
+            Text('Password precedente: ${passwordPrecedente ?? 'N/A'}'), // Mostra la password precedente, se disponibile
             const SizedBox(height: 16),
             TextField(
               controller: _newPasswordController,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Nuova password',
-                errorText: _newPasswordErrorText,
+                errorText: _newPasswordErrorText, // Mostra il testo di errore per la nuova password, se presente
               ),
             ),
             const SizedBox(height: 8),
@@ -117,7 +117,7 @@ class _CampaignResetPasswordState extends State<CampaignResetPassword> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Conferma nuova password',
-                errorText: _confirmPasswordErrorText,
+                errorText: _confirmPasswordErrorText, // Mostra il testo di errore per la conferma della nuova password, se presente
               ),
             ),
             const SizedBox(height: 16),

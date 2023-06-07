@@ -16,6 +16,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     try {
       final email = _controllerEmail.text.trim();
 
+      // Verifica se l'email è vuota, contiene spazi o non contiene il simbolo '@'
       if (email.isEmpty || email.contains(' ') || !(email.contains('@'))) {
         setState(() {
           errorMessage = 'Inserisci un\'email valida.';
@@ -23,7 +24,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         return;
       }
 
+      // Chiama la funzione di reset password fornita dalla classe Auth
       await Auth().resetPassword(email);
+
       setState(() {
         errorMessage = 'Email di reset password inviata. Controlla la tua casella di posta.';
       });
@@ -34,6 +37,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     }
   }
 
+  // Widget per i campi di input
   Widget _entryField(String title, TextEditingController controller) {
     return TextField(
       controller: controller,
@@ -43,6 +47,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
+  // Widget per il messaggio di errore
   Widget _errorMessage() {
     return Text(
       errorMessage == '' ? '' : 'Oops! $errorMessage',
@@ -50,6 +55,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
+  // Widget per il pulsante di invio reset password
   Widget _submitButton() {
     return ElevatedButton(
       onPressed: resetPassword,

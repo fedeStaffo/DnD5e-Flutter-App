@@ -23,6 +23,7 @@ class SessioneDettagli extends StatelessWidget {
             .where('numero', isEqualTo: numero)
             .snapshots(),
         builder: (context, snapshot) {
+          // Controllo degli errori
           if (snapshot.hasError) {
             return const Center(
               child: Text(
@@ -32,6 +33,7 @@ class SessioneDettagli extends StatelessWidget {
             );
           }
 
+          // Controllo dello stato di connessione
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -40,6 +42,7 @@ class SessioneDettagli extends StatelessWidget {
 
           final sessioniList = snapshot.data!.docs;
 
+          // Controllo se la sessione è stata trovata
           if (sessioniList.isEmpty) {
             return const Center(
               child: Text(

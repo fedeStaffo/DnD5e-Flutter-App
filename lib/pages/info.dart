@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 class InfoScreen extends StatelessWidget {
   const InfoScreen({Key? key}) : super(key: key);
 
+  // Funzione per aprire un URL nel browser predefinito
   Future<void> _launchUrl(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -39,9 +40,10 @@ class InfoScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
+              // Bottone per aprire il profilo GitHub di Enrico Maria Sardellini
               TextButton(
                 onPressed: () {
-                  _launchUrl('www.github.com/Ems01');
+                  _launchUrl('https://www.github.com/Ems01');
                 },
                 child: const Text(
                   'https://github.com/Ems01',
@@ -60,9 +62,10 @@ class InfoScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
+              // Bottone per aprire il profilo GitHub di Federico Staffolani
               TextButton(
                 onPressed: () {
-                  _launchUrl('www.github.com/fedeStaffo');
+                  _launchUrl('https://www.github.com/fedeStaffo');
                 },
                 child: const Text(
                   'https://github.com/fedeStaffo',
@@ -81,9 +84,10 @@ class InfoScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
+              // Bottone per aprire il profilo GitHub di Alessandro Renzi
               TextButton(
                 onPressed: () {
-                  _launchUrl('www.github.com/renzialex');
+                  _launchUrl('https://www.github.com/renzialex');
                 },
                 child: const Text(
                   'https://github.com/renzialex',

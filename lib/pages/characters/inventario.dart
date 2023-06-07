@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../memory/character.dart';
 
-class InventrioScreen extends StatefulWidget {
+class InventarioScreen extends StatefulWidget {
   final String? nome;
   final String? classe;
   final String? razza;
   final String? utenteId;
 
-  InventrioScreen({
+  InventarioScreen({
     this.nome,
     this.classe,
     this.razza,
@@ -16,16 +16,17 @@ class InventrioScreen extends StatefulWidget {
   });
 
   @override
-  _InventrioScreenState createState() => _InventrioScreenState();
+  _InventarioScreenState createState() => _InventarioScreenState();
 }
 
-class _InventrioScreenState extends State<InventrioScreen> {
+class _InventarioScreenState extends State<InventarioScreen> {
   final TextEditingController _equipaggiamentoController = TextEditingController();
 
   void _salvaEquipaggiamento() async {
     final String equipaggiamento = _equipaggiamentoController.text.trim();
 
     if (equipaggiamento.isEmpty) {
+      // Mostra una finestra di dialogo se il campo equipaggiamento è vuoto
       showDialog(
         context: context,
         builder: (context) {
@@ -46,6 +47,7 @@ class _InventrioScreenState extends State<InventrioScreen> {
       return;
     }
 
+    // Esegui una query per trovare il personaggio corrispondente
     final personaggiSnapshot = await FirebaseFirestore.instance
         .collection('personaggi')
         .where('nome', isEqualTo: widget.nome)
@@ -59,8 +61,10 @@ class _InventrioScreenState extends State<InventrioScreen> {
       final personaggio = Personaggio.fromSnapshot(personaggioDoc);
       final updatedEquipaggiamento = [...personaggio.equipaggiamento ?? [], equipaggiamento];
 
+      // Aggiorna il documento del personaggio con il nuovo equipaggiamento
       await personaggioDoc.reference.update({'equipaggiamento': updatedEquipaggiamento});
 
+      // Mostra una finestra di dialogo per confermare il successo dell'aggiunta dell'oggetto
       showDialog(
         context: context,
         builder: (context) {
@@ -82,6 +86,7 @@ class _InventrioScreenState extends State<InventrioScreen> {
   }
 
   void _rimuoviEquipaggiamento(String equipaggiamento) async {
+    // Esegui una query per trovare il personaggio corrispondente
     final personaggiSnapshot = await FirebaseFirestore.instance
         .collection('personaggi')
         .where('nome', isEqualTo: widget.nome)
@@ -96,8 +101,10 @@ class _InventrioScreenState extends State<InventrioScreen> {
       final updatedEquipaggiamento = [...personaggio.equipaggiamento ?? []];
       updatedEquipaggiamento.remove(equipaggiamento);
 
+      // Aggiorna il documento del personaggio rimuovendo l'oggetto dall'equipaggiamento
       await personaggioDoc.reference.update({'equipaggiamento': updatedEquipaggiamento});
 
+      // Mostra una finestra di dialogo per confermare il successo della rimozione dell'oggetto
       showDialog(
         context: context,
         builder: (context) {
@@ -130,20 +137,23 @@ class _InventrioScreenState extends State<InventrioScreen> {
           .get(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
+          // Se la connessione è in attesa, mostra un indicatore di caricamento
           return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
+          // Se si verifica un errore, mostra un messaggio di errore
           return Center(
             child: Text('Errore: ${snapshot.error}'),
           );
         } else if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+          // Se non ci sono dati o i dati sono vuoti, mostra un messaggio che il personaggio non è stato trovato
           return const Center(
             child: Text('Personaggio non trovato'),
           );
         } else {
           final personaggio = Personaggio.fromSnapshot(
-            snapshot.data!.docs.first, // Utilizzo il primo documento nella lista
+            snapshot.data!.docs.first, // Utilizza il primo documento nella lista
           );
 
           return SingleChildScrollView(
@@ -216,5 +226,4 @@ class _InventrioScreenState extends State<InventrioScreen> {
       },
     );
   }
-
 }

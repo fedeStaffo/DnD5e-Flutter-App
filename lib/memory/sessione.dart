@@ -1,9 +1,9 @@
 class Sessione {
-  final String? numero;
-  final String? giorno;
-  final String? descrizione;
-  final String? campagna;
-  final String? master;
+  final String? numero; // Numero della sessione
+  final String? giorno; // Giorno in cui si tiene la sessione
+  final String? descrizione; // Descrizione della sessione
+  final String? campagna; // Campagna a cui appartiene la sessione
+  final String? master; // Master che guida la sessione
 
   Sessione({
     this.numero,

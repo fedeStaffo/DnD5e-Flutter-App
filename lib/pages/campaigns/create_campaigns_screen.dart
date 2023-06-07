@@ -11,12 +11,14 @@ class CreateCampaignScreen extends StatelessWidget {
   final CollectionReference<Map<String, dynamic>> campagneRef =
   FirebaseFirestore.instance.collection('campagne');
 
+  // Crea una nuova campagna
   void _creaCampagna(BuildContext context) {
     final String nome = _nomeController.text;
     final String password = _passwordController.text;
     final String confermaPassword = _confermaPasswordController.text;
     final String master = _masterController.text;
 
+    // Verifica che tutti i campi siano compilati correttamente
     if (nome.isNotEmpty &&
         password.isNotEmpty &&
         confermaPassword.isNotEmpty &&
@@ -32,10 +34,11 @@ class CreateCampaignScreen extends StatelessWidget {
           'masterId': currentUser.uid,
         };
 
+        // Salva la campagna nel database
         nuovoDocumento
             .set(campagna)
             .then((_) {
-          // Creazione della campagna completata con successo
+          // Mostra una finestra di dialogo di successo
           showDialog(
             context: context,
             builder: (context) {
@@ -53,7 +56,7 @@ class CreateCampaignScreen extends StatelessWidget {
           );
         })
             .catchError((error) {
-          // Errore durante la creazione della campagna
+          // Mostra una finestra di dialogo di errore
           showDialog(
             context: context,
             builder: (context) {
@@ -72,6 +75,7 @@ class CreateCampaignScreen extends StatelessWidget {
         });
       }
     } else {
+      // Mostra una finestra di dialogo se i campi non sono compilati correttamente
       showDialog(
         context: context,
         builder: (context) {
@@ -94,7 +98,7 @@ class CreateCampaignScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crea Campagna'),
+        title: const Text('Crea Campagna'), // Titolo dell'app
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

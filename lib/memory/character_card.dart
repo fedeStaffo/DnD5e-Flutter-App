@@ -6,10 +6,10 @@ import '../pages/characters/visualizza_personaggio.dart';
 import 'character.dart';
 
 class CharacterCard extends StatelessWidget {
-  final String? nome;
-  final String? classe;
-  final String? razza;
-  final String? utenteId;
+  final String? nome; // Nome del personaggio
+  final String? classe; // Classe del personaggio
+  final String? razza; // Razza del personaggio
+  final String? utenteId; // ID dell'utente proprietario del personaggio
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -48,6 +48,7 @@ class CharacterCard extends StatelessWidget {
         ),
         onTap: () {
           if (utenteId == userId) {
+            // Se l'utente è il proprietario del personaggio, visualizza la schermata di visualizzazione del personaggio
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -60,6 +61,7 @@ class CharacterCard extends StatelessWidget {
               ),
             );
           } else {
+            // Se l'utente non è il proprietario del personaggio, mostra una finestra di dialogo con i dettagli del personaggio
             showDialog(
               context: context,
               builder: (context) => FutureBuilder<QuerySnapshot>(
@@ -76,6 +78,7 @@ class CharacterCard extends StatelessWidget {
                   }
 
                   if (snapshot.hasError || snapshot.data!.docs.isEmpty) {
+                    // Se si verifica un errore o non viene trovato un personaggio corrispondente, mostra un messaggio di errore
                     return AlertDialog(
                       title: Text(nome ?? ''),
                       content: const Text('Impossibile recuperare i dettagli del personaggio.'),
@@ -90,6 +93,7 @@ class CharacterCard extends StatelessWidget {
 
                   final personaggio = Personaggio.fromSnapshot(snapshot.data!.docs.first);
 
+                  // Mostra i dettagli del personaggio in una finestra di dialogo
                   return AlertDialog(
                     title: Text(nome ?? ''),
                     content: Column(
@@ -121,7 +125,6 @@ class CharacterCard extends StatelessWidget {
                 },
               ),
             );
-
           }
         },
       ),

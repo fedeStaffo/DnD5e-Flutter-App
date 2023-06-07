@@ -20,12 +20,12 @@ class BackGroundScreen extends StatefulWidget {
 }
 
 class _BackGroundScreenState extends State<BackGroundScreen> {
-  String _selectedField = 'Allineamento';
-  final TextEditingController _modificaController = TextEditingController();
-  String? _selectedAlignment;
+  String _selectedField = 'Allineamento'; // Campo selezionato per la modifica inizializzato a "Allineamento"
+  final TextEditingController _modificaController = TextEditingController(); // Controller per il campo di testo di modifica
+  String? _selectedAlignment; // Allineamento selezionato
 
   void _salvaModifica() async {
-    final String modifica = _modificaController.text.trim();
+    final String modifica = _modificaController.text.trim(); // Testo di modifica ottenuto dal campo di testo
 
     if (modifica.isEmpty) {
       showDialog(
@@ -33,7 +33,7 @@ class _BackGroundScreenState extends State<BackGroundScreen> {
         builder: (context) {
           return AlertDialog(
             title: Text('Errore'),
-            content: Text('Non sono ammessi campi vuoti.'),
+            content: Text('Non sono ammessi campi vuoti.'), // Messaggio di errore se il campo di modifica è vuoto
             actions: [
               TextButton(
                 onPressed: () {
@@ -54,21 +54,21 @@ class _BackGroundScreenState extends State<BackGroundScreen> {
         .where('classe', isEqualTo: widget.classe)
         .where('razza', isEqualTo: widget.razza)
         .where('utenteId', isEqualTo: widget.utenteId)
-        .get();
+        .get(); // Ottiene lo snapshot dei personaggi corrispondenti ai criteri di ricerca
 
     if (personaggiSnapshot.docs.isNotEmpty) {
-      final personaggioDoc = personaggiSnapshot.docs.first;
-      final fieldName = _selectedField.toLowerCase();
-      final fieldData = {fieldName: modifica};
+      final personaggioDoc = personaggiSnapshot.docs.first; // Ottiene il primo documento nella lista
+      final fieldName = _selectedField.toLowerCase(); // Converte il nome del campo selezionato in minuscolo
+      final fieldData = {fieldName: modifica}; // Dati da aggiornare nel documento
 
-      await personaggioDoc.reference.update(fieldData);
+      await personaggioDoc.reference.update(fieldData); // Aggiorna il documento con i nuovi dati
 
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Successo'),
-            content: Text('Modifica salvata correttamente.'),
+            content: Text('Modifica salvata correttamente.'), // Messaggio di successo per la modifica salvata
             actions: [
               TextButton(
                 onPressed: () {
@@ -87,12 +87,12 @@ class _BackGroundScreenState extends State<BackGroundScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-          DropdownButton<String>(
+        DropdownButton<String>(
           value: _selectedAlignment,
           onChanged: (String? newValue) {
             setState(() {
               _selectedAlignment = newValue;
-              _modificaController.text = newValue!;
+              _modificaController.text = newValue!; // Aggiorna il campo di testo di modifica con l'allineamento selezionato
             });
           },
           items: <String>[
@@ -136,7 +136,7 @@ class _BackGroundScreenState extends State<BackGroundScreen> {
           .where('classe', isEqualTo: widget.classe)
           .where('razza', isEqualTo: widget.razza)
           .where('utenteId', isEqualTo: widget.utenteId)
-          .get(),
+          .get(), // Ottiene lo snapshot dei personaggi corrispondenti ai criteri di ricerca
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -148,7 +148,7 @@ class _BackGroundScreenState extends State<BackGroundScreen> {
           );
         } else if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
           return const Center(
-            child: Text('Personaggio non trovato'),
+            child: Text('Personaggio non trovato'), // Messaggio se il personaggio non è stato trovato
           );
         } else {
           final personaggio = Personaggio.fromSnapshot(
@@ -218,9 +218,9 @@ class _BackGroundScreenState extends State<BackGroundScreen> {
                       value: _selectedField,
                       onChanged: (String? newValue) {
                         setState(() {
-                          _selectedField = newValue!;
+                          _selectedField = newValue!; // Aggiorna il campo selezionato per la modifica
                           if (_selectedField == 'Allineamento') {
-                            _modificaController.text = _selectedAlignment ?? '';
+                            _modificaController.text = _selectedAlignment ?? ''; // Aggiorna il campo di testo di modifica con l'allineamento selezionato
                           } else {
                             _modificaController.text = '';
                           }

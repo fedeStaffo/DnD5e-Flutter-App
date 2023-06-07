@@ -25,12 +25,14 @@ class _VisualizzaNpcState extends State<VisualizzaNpc> {
             .where('campagna', isEqualTo: widget.campagna)
             .snapshots(),
         builder: (context, snapshot) {
+          // Gestisce gli errori durante il recupero degli NPC
           if (snapshot.hasError) {
             return const Center(
               child: Text('Si è verificato un errore durante il recupero degli NPC.'),
             );
           }
 
+          // Mostra uno spinner di caricamento mentre si attende la connessione al database
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -39,12 +41,14 @@ class _VisualizzaNpcState extends State<VisualizzaNpc> {
 
           final npcList = snapshot.data!.docs;
 
+          // Mostra un messaggio se non ci sono NPC nella campagna
           if (npcList.isEmpty) {
             return const Center(
               child: Text('Nessun NPC presente in questa campagna.'),
             );
           }
 
+          // Costruisce una ListView per visualizzare gli NPC
           return ListView.builder(
             itemCount: npcList.length,
             itemBuilder: (context, index) {
@@ -54,6 +58,7 @@ class _VisualizzaNpcState extends State<VisualizzaNpc> {
 
               return InkWell(
                 onTap: () {
+                  // Naviga alla schermata di dettaglio NPC passando i dati necessari
                   Navigator.push(
                     context,
                     MaterialPageRoute(

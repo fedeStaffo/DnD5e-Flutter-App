@@ -7,9 +7,12 @@ import 'package:progetto_dd/auth/login_register_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inizializzazione di Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -23,14 +26,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.blue,
-          // PROVA: Prova a cambiare il primarySwatch con un altro colore, come Colors.green.
         ),
       ),
       routes: {
-        '/login': (context) => LoginPage(),
-        '/home_campaigns': (context) => HomeCampaigns(),
+        '/login': (context) => LoginPage(), // Pagina di accesso
+        '/home_campaigns': (context) => HomeCampaigns(), // Pagina principale delle campagne
       },
-      home: const WidgetTree()
+      home: const WidgetTree(), // Widget principale dell'applicazione
     );
   }
 }

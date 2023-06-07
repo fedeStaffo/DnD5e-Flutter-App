@@ -11,18 +11,19 @@ class AggiungiEquipaggiamento extends StatefulWidget {
 }
 
 class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
-  String? selectedGiocatore;
-  List<String> giocatori = [];
+  String? selectedGiocatore; // Giocatore selezionato
+  List<String> giocatori = []; // Elenco dei giocatori
 
-  final TextEditingController _equipaggiamentoController = TextEditingController();
+  final TextEditingController _equipaggiamentoController = TextEditingController(); // Controller per il campo di testo dell'equipaggiamento
 
   @override
   void initState() {
     super.initState();
-    _fetchGiocatori();
+    _fetchGiocatori(); // Recupera i giocatori della campagna dal database
   }
 
   void _fetchGiocatori() {
+    // Recupera i giocatori associati alla campagna dal database
     FirebaseFirestore.instance
         .collection('personaggi')
         .where('campagna', isEqualTo: widget.campagnaNome)
@@ -39,6 +40,7 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
   }
 
   void _aggiungiEquipaggiamento() {
+    // Aggiunge l'equipaggiamento al personaggio nel database
     if (selectedGiocatore == null || _equipaggiamentoController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Seleziona un giocatore e inserisci l\'equipaggiamento.'),
@@ -108,6 +110,7 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
                   });
                 },
                 items: giocatori.map((String value) {
+                  // Elenco dei giocatori disponibili nel menu a tendina
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(

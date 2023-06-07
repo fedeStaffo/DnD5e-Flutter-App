@@ -31,7 +31,9 @@ class LogoutPage extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
+                // Effettua il logout utilizzando la classe Auth
                 Auth().signOut();
+                // Reindirizza l'utente alla pagina di login
                 Navigator.pushReplacementNamed(context, '/login');
               },
               child: const Text('Logout'),

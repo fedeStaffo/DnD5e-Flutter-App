@@ -11,10 +11,11 @@ class AggiornaStatoPersonaggio extends StatefulWidget {
 }
 
 class _AggiornaStatoPersonaggioState extends State<AggiornaStatoPersonaggio> {
-  String? selectedGiocatore;
-  String? selectedStato;
-  List<String> giocatori = [];
+  String? selectedGiocatore; // Giocatore selezionato
+  String? selectedStato; // Stato selezionato
+  List<String> giocatori = []; // Elenco dei giocatori
   List<String> stati = [
+    // Elenco degli stati
     'Accecato',
     'Affascinato',
     'Afferrato',
@@ -35,10 +36,11 @@ class _AggiornaStatoPersonaggioState extends State<AggiornaStatoPersonaggio> {
   @override
   void initState() {
     super.initState();
-    _fetchGiocatori();
+    _fetchGiocatori(); // Recupera i giocatori della campagna dal database
   }
 
   void _fetchGiocatori() {
+    // Recupera i giocatori associati alla campagna dal database
     FirebaseFirestore.instance
         .collection('personaggi')
         .where('campagna', isEqualTo: widget.campagnaNome)
@@ -55,6 +57,7 @@ class _AggiornaStatoPersonaggioState extends State<AggiornaStatoPersonaggio> {
   }
 
   void _aggiornaStato() {
+    // Aggiorna lo stato del personaggio nel database
     if (selectedGiocatore == null || selectedStato == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Seleziona un giocatore e uno stato.'),
@@ -115,6 +118,7 @@ class _AggiornaStatoPersonaggioState extends State<AggiornaStatoPersonaggio> {
                   });
                 },
                 items: giocatori.map((String value) {
+                  // Elenco dei giocatori disponibili nel menu a tendina
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -138,6 +142,7 @@ class _AggiornaStatoPersonaggioState extends State<AggiornaStatoPersonaggio> {
                   });
                 },
                 items: stati.map((String value) {
+                  // Elenco degli stati disponibili nel menu a tendina
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(

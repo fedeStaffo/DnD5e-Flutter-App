@@ -18,6 +18,7 @@ class StatisticheScreen extends StatelessWidget {
   });
 
   Future<void> eliminaPersonaggio(BuildContext context) async {
+    // Elimina il personaggio corrispondente dai dati Firestore
     await FirebaseFirestore.instance
         .collection('personaggi')
         .where('nome', isEqualTo: nome)
@@ -30,6 +31,7 @@ class StatisticheScreen extends StatelessWidget {
         final DocumentSnapshot personaggio = snapshot.docs.first;
         personaggio.reference.delete();
 
+        // Torna alla schermata HomeCharacter dopo l'eliminazione
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -38,6 +40,7 @@ class StatisticheScreen extends StatelessWidget {
         );
       }
     }).catchError((error) {
+      // Mostra un dialog in caso di errore durante l'eliminazione
       showDialog(
         context: context,
         builder: (context) {
@@ -70,10 +73,12 @@ class StatisticheScreen extends StatelessWidget {
           .get(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
+          // Visualizza un indicatore di caricamento durante il recupero dei dati
           return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
+          // Gestisci gli errori di recupero dei dati
           return Center(
             child: Text(
               'Errore: ${snapshot.error}',
@@ -81,6 +86,7 @@ class StatisticheScreen extends StatelessWidget {
             ),
           );
         } else if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
+          // Se non sono disponibili dati o il personaggio non è stato trovato
           return const Center(
             child: Text(
               'Personaggio non trovato',
@@ -88,6 +94,7 @@ class StatisticheScreen extends StatelessWidget {
             ),
           );
         } else {
+          // Se il personaggio è stato trovato, visualizza i dati
           final personaggio = Personaggio.fromSnapshot(
             snapshot.data!.docs.first, // Utilizzo il primo documento nella lista
           );

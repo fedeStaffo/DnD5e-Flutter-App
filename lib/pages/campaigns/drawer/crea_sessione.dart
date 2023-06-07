@@ -16,6 +16,7 @@ class _CreaSessioneState extends State<CreaSessione> {
   final TextEditingController _giornoController = TextEditingController();
   final TextEditingController _descrizioneController = TextEditingController();
 
+  // Funzione per creare una sessione
   void _creaSessione() async {
     final String numero = _numeroController.text;
     final String giorno = _giornoController.text;
@@ -23,6 +24,7 @@ class _CreaSessioneState extends State<CreaSessione> {
     final String? campagna = widget.campagna;
     final String? master = widget.masterId;
 
+    // Controllo se tutti i campi sono stati riempiti
     if (numero.isEmpty || giorno.isEmpty || descrizione.isEmpty) {
       showDialog(
         context: context,
@@ -42,6 +44,7 @@ class _CreaSessioneState extends State<CreaSessione> {
       return;
     }
 
+    // Controllo se esiste già una sessione con lo stesso numero nella stessa campagna
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('sessioni')
         .where('campagna', isEqualTo: campagna)
@@ -67,6 +70,7 @@ class _CreaSessioneState extends State<CreaSessione> {
       return;
     }
 
+    // Creazione della sessione nel database
     FirebaseFirestore.instance.collection('sessioni').add({
       'numero': numero,
       'giorno': giorno,
@@ -74,6 +78,7 @@ class _CreaSessioneState extends State<CreaSessione> {
       'campagna': campagna,
       'master': master,
     }).then((_) {
+      // Mostra un dialogo di successo
       showDialog(
         context: context,
         builder: (context) {
@@ -90,6 +95,7 @@ class _CreaSessioneState extends State<CreaSessione> {
         },
       );
     }).catchError((error) {
+      // Mostra un dialogo di errore in caso di fallimento
       showDialog(
         context: context,
         builder: (context) {

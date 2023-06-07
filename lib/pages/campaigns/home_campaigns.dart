@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'campaign_list_screen.dart';
 import 'create_campaigns_screen.dart';
 import 'join_campaign_screen.dart';
@@ -21,26 +20,26 @@ class _HomeCampaignsState extends State<HomeCampaigns> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: _screens[_currentIndex], // Mostra lo schermo corrente in base all'indice selezionato
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: _currentIndex, // Indice dell'icona selezionata
         onTap: (int index) {
           setState(() {
-            _currentIndex = index;
+            _currentIndex = index; // Cambia l'indice quando viene selezionata un'icona diversa
           });
         },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Campagne',
+            label: 'Campagne', // Etichetta per l'icona "Campagne"
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
-            label: 'Crea',
+            label: 'Crea', // Etichetta per l'icona "Crea"
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Unisciti',
+            label: 'Unisciti', // Etichetta per l'icona "Unisciti"
           ),
         ],
       ),

@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.6.2
   cloud_firestore: ^4.8.0
   rxdart: ^0.27.7
+  math_expressions: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/logo.png
+    - assets/strings.json
     - assets/images/knight.png
     - assets/images/treasure_map.png
     - assets/images/drawer_image.jpg
