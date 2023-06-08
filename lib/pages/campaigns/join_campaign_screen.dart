@@ -8,9 +8,13 @@ class JoinCampaignScreen extends StatefulWidget {
 }
 
 class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
-  final TextEditingController _nomeCampagnaController = TextEditingController();
-  final TextEditingController _passwordCampagnaController = TextEditingController();
+  final TextEditingController _nomeCampagnaController =
+  TextEditingController();
+  final TextEditingController _passwordCampagnaController =
+  TextEditingController();
   String? _nomePersonaggioSelezionato;
+
+  bool _obscurePassword = true;
 
   @override
   void initState() {
@@ -55,7 +59,8 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
 
       final campagnaDocument = snapshot.docs[0];
       final campagnaId = campagnaDocument.id;
-      final partecipanti = campagnaDocument.get('partecipanti') as List<dynamic>;
+      final partecipanti =
+      campagnaDocument.get('partecipanti') as List<dynamic>;
 
       final userId = FirebaseAuth.instance.currentUser?.uid;
       final campagnaMasterId = campagnaDocument.get('masterId') as String;
@@ -104,8 +109,10 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
         'partecipanti': FieldValue.arrayUnion([userId]),
       };
 
-      if (_nomePersonaggioSelezionato != null && _nomePersonaggioSelezionato!.isNotEmpty) {
-        updates['personaggi'] = FieldValue.arrayUnion([_nomePersonaggioSelezionato]);
+      if (_nomePersonaggioSelezionato != null &&
+          _nomePersonaggioSelezionato!.isNotEmpty) {
+        updates['personaggi'] =
+            FieldValue.arrayUnion([_nomePersonaggioSelezionato]);
 
         // Aggiorna il campo 'campagna' nel documento del personaggio selezionato
         FirebaseFirestore.instance
@@ -148,7 +155,8 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
           builder: (context) {
             return AlertDialog(
               title: const Text('Errore'),
-              content: const Text('Si è verificato un errore durante l\'unione alla campagna'),
+              content: const Text(
+                  'Si è verificato un errore durante l\'unione alla campagna'),
               actions: [
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
@@ -181,16 +189,28 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
               ),
               TextField(
                 controller: _passwordCampagnaController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password della campagna',
+                  suffixIcon: IconButton(
+                    icon: Icon(_obscurePassword
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
                 ),
+                obscureText: _obscurePassword,
               ),
               const SizedBox(height: 16.0),
               StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('personaggi')
                     .where('campagna', isEqualTo: '')
-                    .where('utenteId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                    .where('utenteId',
+                    isEqualTo: FirebaseAuth.instance.currentUser?.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -210,14 +230,16 @@ class _JoinCampaignScreenState extends State<JoinCampaignScreen> {
                       .toSet()
                       .toList();
 
-                  if (personaggiDisponibili == null || personaggiDisponibili.isEmpty) {
+                  if (personaggiDisponibili == null ||
+                      personaggiDisponibili.isEmpty) {
                     // Nessun personaggio disponibile
                     return const Text('Nessun personaggio disponibile');
                   }
 
                   if (_nomePersonaggioSelezionato != null &&
                       !_nomePersonaggioSelezionato!.isEmpty &&
-                      !personaggiDisponibili.contains(_nomePersonaggioSelezionato)) {
+                      !personaggiDisponibili
+                          .contains(_nomePersonaggioSelezionato)) {
                     // Il personaggio selezionato non è più disponibile
                     _nomePersonaggioSelezionato = null;
                   }

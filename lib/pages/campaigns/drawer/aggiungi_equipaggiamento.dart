@@ -43,7 +43,7 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
     // Aggiunge l'equipaggiamento al personaggio nel database
     if (selectedGiocatore == null || _equipaggiamentoController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Seleziona un giocatore e inserisci l\'equipaggiamento.'),
+        content: Text('Seleziona un giocatore e inserisci il nuovo oggetto.'),
       ));
       return;
     }
@@ -62,12 +62,12 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
           'equipaggiamento': equipaggiamento,
         }).then((_) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Equipaggiamento aggiunto con successo!'),
+            content: Text('Oggetto aggiunto con successo!'),
           ));
           _equipaggiamentoController.clear();
         }).catchError((error) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Si è verificato un errore durante l\'aggiunta dell\'equipaggiamento.'),
+            content: Text('Si è verificato un errore durante l\'aggiunta dell\'oggetto.'),
           ));
         });
       }
@@ -86,7 +86,7 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aggiungi Equipaggiamento'),
+        title: const Text('Nuovo Oggetto'),
       ),
       body: Center(
         child: Padding(
@@ -95,7 +95,7 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Seleziona il giocatore a cui aggiungere l\'equipaggiamento',
+                'Seleziona il giocatore a cui aggiungere il nuovo oggetto',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class _AggiungiEquipaggiamentoState extends State<AggiungiEquipaggiamento> {
               TextField(
                 controller: _equipaggiamentoController,
                 decoration: const InputDecoration(
-                  labelText: 'Equipaggiamento',
+                  labelText: 'Oggetto',
                 ),
               ),
               const SizedBox(height: 16),

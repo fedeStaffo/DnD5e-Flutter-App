@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'dettagli_sessione.dart';
 
 class VisualizzaSessioni extends StatefulWidget {
@@ -12,6 +14,8 @@ class VisualizzaSessioni extends StatefulWidget {
 }
 
 class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +60,8 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
             );
           }
 
+          final User? currentUser = _auth.currentUser;
+
           // Costruisce una ListView per visualizzare le sessioni
           return ListView.builder(
             itemCount: sessioniList.length,
@@ -63,6 +69,10 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
               final sessioneData = sessioniList[index].data() as Map<String, dynamic>;
               final numero = sessioneData['numero'];
               final giorno = sessioneData['giorno'];
+
+              final isMaster = currentUser != null &&
+                  sessioneData['master'] == currentUser.uid &&
+                  sessioneData['campagna'] == widget.campagna;
 
               return Card(
                 child: ListTile(
@@ -85,6 +95,37 @@ class _VisualizzaSessioniState extends State<VisualizzaSessioni> {
                         ),
                       ),
                     );
+                  },
+                  onLongPress: () {
+                    // Elimina la sessione se l'utente corrente è il master della campagna
+                    if (isMaster) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Elimina Sessione'),
+                          content: const Text('Sei sicuro di voler eliminare questa sessione?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Annulla'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Effettua l'eliminazione della sessione
+                                FirebaseFirestore.instance
+                                    .collection('sessioni')
+                                    .doc(sessioniList[index].id)
+                                    .delete();
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Elimina'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                 ),
               );

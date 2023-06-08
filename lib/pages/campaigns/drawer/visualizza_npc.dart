@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'dettagli_npc.dart';
 
@@ -13,6 +14,8 @@ class VisualizzaNpc extends StatefulWidget {
 }
 
 class _VisualizzaNpcState extends State<VisualizzaNpc> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +59,13 @@ class _VisualizzaNpcState extends State<VisualizzaNpc> {
               final nome = npcData['nome'];
               final legame = npcData['legame'];
 
+              final User? currentUser = _auth.currentUser;
+
+              // Verifica se l'utente corrente è il master della campagna
+              final isMaster = currentUser != null &&
+                  npcData['master'] == currentUser.uid &&
+                  npcData['campagna'] == widget.campagna;
+
               return InkWell(
                 onTap: () {
                   // Naviga alla schermata di dettaglio NPC passando i dati necessari
@@ -68,6 +78,34 @@ class _VisualizzaNpcState extends State<VisualizzaNpc> {
                       ),
                     ),
                   );
+                },
+                onLongPress: () {
+                  // Elimina l'NPC se l'utente corrente è il master della campagna
+                  if (isMaster) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Elimina NPC'),
+                        content: const Text('Sei sicuro di voler eliminare questo NPC?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Annulla'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Esegui l'eliminazione dell'NPC
+                              FirebaseFirestore.instance.collection('npc').doc(npcList[index].id).delete();
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Elimina'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
                 child: Card(
                   child: ListTile(

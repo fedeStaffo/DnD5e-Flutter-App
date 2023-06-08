@@ -2,11 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class CreateCampaignScreen extends StatelessWidget {
+class CreateCampaignScreen extends StatefulWidget {
+  @override
+  _CreateCampaignScreenState createState() => _CreateCampaignScreenState();
+}
+
+class _CreateCampaignScreenState extends State<CreateCampaignScreen> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confermaPasswordController = TextEditingController();
+  final TextEditingController _confermaPasswordController =
+  TextEditingController();
   final TextEditingController _masterController = TextEditingController();
+
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   final CollectionReference<Map<String, dynamic>> campagneRef =
   FirebaseFirestore.instance.collection('campagne');
@@ -62,7 +71,8 @@ class CreateCampaignScreen extends StatelessWidget {
             builder: (context) {
               return AlertDialog(
                 title: const Text('Errore'),
-                content: const Text('Si è verificato un errore durante la creazione della campagna.'),
+                content:
+                const Text('Si è verificato un errore durante la creazione della campagna.'),
                 actions: [
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
@@ -98,7 +108,7 @@ class CreateCampaignScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Crea Campagna'), // Titolo dell'app
+        title: const Text('Crea Campagna'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -118,17 +128,37 @@ class CreateCampaignScreen extends StatelessWidget {
             ),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Password',
+                suffixIcon: IconButton(
+                  icon: Icon(_obscurePassword
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                ),
               ),
-              obscureText: true,
+              obscureText: _obscurePassword,
             ),
             TextField(
               controller: _confermaPasswordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Conferma Password',
+                suffixIcon: IconButton(
+                  icon: Icon(_obscureConfirmPassword
+                      ? Icons.visibility
+                      : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _obscureConfirmPassword = !_obscureConfirmPassword;
+                    });
+                  },
+                ),
               ),
-              obscureText: true,
+              obscureText: _obscureConfirmPassword,
             ),
             ElevatedButton(
               onPressed: () => _creaCampagna(context),

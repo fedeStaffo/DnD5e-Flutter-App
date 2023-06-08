@@ -44,6 +44,47 @@ class _CreaSessioneState extends State<CreaSessione> {
       return;
     }
 
+    // Controllo se il formato della data è corretto
+    final RegExp dateRegex = RegExp(r'^\d{4}/\d{2}/\d{2}$');
+    if (!dateRegex.hasMatch(giorno)) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Errore'),
+            content: const Text('Inserisci una data nel formato corretto (YYYY/MM/DD)'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    // Controllo se il numero è un valore numerico
+    if (int.tryParse(numero) == null) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Errore'),
+            content: const Text('Inserisci un numero valido'),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
     // Controllo se esiste già una sessione con lo stesso numero nella stessa campagna
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('sessioni')
@@ -127,14 +168,16 @@ class _CreaSessioneState extends State<CreaSessione> {
             children: [
               TextField(
                 controller: _numeroController,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: 'Numero',
                 ),
               ),
               TextField(
                 controller: _giornoController,
+                keyboardType: TextInputType.datetime,
                 decoration: const InputDecoration(
-                  labelText: 'Giorno',
+                  labelText: 'Giorno (YYYY/MM/DD)',
                 ),
               ),
               TextField(

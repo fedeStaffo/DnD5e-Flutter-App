@@ -131,7 +131,7 @@ class StatisticheScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  'Campagna: ${personaggio.campagna ?? ''}',
+                  'Campagna: ${personaggio.campagna ?? ''}\n',
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
@@ -139,7 +139,7 @@ class StatisticheScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  'Stato: ${personaggio.stato ?? ''}',
+                  'Stato: ${personaggio.stato ?? ''}\n',
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(

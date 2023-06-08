@@ -143,12 +143,6 @@ class EliminaCampagna extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              Text(
-                'ID Master: $masterId',
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => _mostraDialogConferma(context),

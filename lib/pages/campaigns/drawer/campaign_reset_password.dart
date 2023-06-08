@@ -12,13 +12,18 @@ class CampaignResetPassword extends StatefulWidget {
 }
 
 class _CampaignResetPasswordState extends State<CampaignResetPassword> {
-  final TextEditingController _newPasswordController = TextEditingController(); // Controller per il campo di testo della nuova password
-  final TextEditingController _confirmPasswordController = TextEditingController(); // Controller per il campo di testo di conferma della nuova password
+  final TextEditingController _newPasswordController =
+  TextEditingController(); // Controller per il campo di testo della nuova password
+  final TextEditingController _confirmPasswordController =
+  TextEditingController(); // Controller per il campo di testo di conferma della nuova password
 
   String? _newPasswordErrorText; // Testo di errore per la nuova password
   String? _confirmPasswordErrorText; // Testo di errore per la conferma della nuova password
 
   String? passwordPrecedente; // Password precedente
+
+  bool _obscureNewPassword = true; // Flag per mostrare/nascondere la nuova password
+  bool _obscureConfirmPassword = true; // Flag per mostrare/nascondere la conferma della password
 
   @override
   void dispose() {
@@ -75,7 +80,8 @@ class _CampaignResetPasswordState extends State<CampaignResetPassword> {
           }).catchError((error) {
             // Si è verificato un errore durante l'aggiornamento
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Si è verificato un errore durante l\'aggiornamento della password.'),
+              content:
+              Text('Si è verificato un errore durante l\'aggiornamento della password.'),
             ));
           });
         }
@@ -105,19 +111,40 @@ class _CampaignResetPasswordState extends State<CampaignResetPassword> {
             const SizedBox(height: 16),
             TextField(
               controller: _newPasswordController,
-              obscureText: true,
+              obscureText: _obscureNewPassword,
               decoration: InputDecoration(
                 labelText: 'Nuova password',
                 errorText: _newPasswordErrorText, // Mostra il testo di errore per la nuova password, se presente
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureNewPassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureNewPassword = !_obscureNewPassword;
+                    });
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: _confirmPasswordController,
-              obscureText: true,
+              obscureText: _obscureConfirmPassword,
               decoration: InputDecoration(
                 labelText: 'Conferma nuova password',
-                errorText: _confirmPasswordErrorText, // Mostra il testo di errore per la conferma della nuova password, se presente
+                errorText:
+                _confirmPasswordErrorText, // Mostra il testo di errore per la conferma della nuova password, se presente
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureConfirmPassword = !_obscureConfirmPassword;
+                    });
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 16),

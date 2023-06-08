@@ -47,7 +47,7 @@ class _InfoCRScreenState extends State<InfoCRScreen> {
           const SizedBox(height: 20),
           const Text(
             'Informazioni sulla classe:', // Titolo delle informazioni sulla classe
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, color: Colors.red),
           ),
           const SizedBox(height: 10),
           Text(
@@ -57,7 +57,7 @@ class _InfoCRScreenState extends State<InfoCRScreen> {
           const SizedBox(height: 20),
           const Text(
             'Informazioni sulla razza:', // Titolo delle informazioni sulla razza
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 20, color: Colors.red),
           ),
           const SizedBox(height: 10),
           Text(
