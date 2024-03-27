@@ -24,14 +24,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Scheda D&D 5e',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
       ),
       routes: {
-        '/login': (context) => LoginPage(), // Pagina di accesso
-        '/home_campaigns': (context) => HomeCampaigns(), // Pagina principale delle campagne
-      },
+    '/login': (context) => LoginPage(), // Pagina di accesso
+    '/home_campaigns': (context) => HomeCampaigns(), // Pagina principale delle campagne
+    },
       home: const WidgetTree(), // Widget principale dell'applicazione
     );
   }
