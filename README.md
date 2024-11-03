@@ -15,7 +15,7 @@ This project presents a mobile application developed using Flutter, aimed at fac
 
 * [🎯 Project Goal](#statement)
 * [⚙️ Methodology](#methodology)
-* [📈 Features](#features)
+* [📲 Features](#features)
 * [👨🏻‍💻 Authors](#Authors)
 
 <a name="statement"/></a>
@@ -40,7 +40,7 @@ Users can create accounts to access the main functionalities of the app:
 
 <a name="features"/></a>
 
-## 📈 Features
+## 📲 Features
 
 - **Firebase Authentication**: User login and registration are managed via Firebase Authentication.
 - **Persistent Data**: Firestore Database stores character, campaign, and session data.
