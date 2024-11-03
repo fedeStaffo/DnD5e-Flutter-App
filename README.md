@@ -16,7 +16,6 @@ This project presents a mobile application developed using Flutter, aimed at fac
 * [🎯 Project Goal](#statement)
 * [⚙️ Methodology](#methodology)
 * [📲 Features](#features)
-* [👨🏻‍💻 Authors](#Authors)
 
 <a name="statement"/></a>
 
@@ -48,10 +47,3 @@ Users can create accounts to access the main functionalities of the app:
 - **Statistical Tracking**: Tracks player progress and gameplay statistics, providing insights for character profiles.
 
 <a name="Authors"/></a>
-
-## 👨🏻‍💻 Authors
-
-| Name                    | Email                       | GitHub                                          |
-|-------------------------|-----------------------------|-------------------------------------------------|
-| Federico Staffolani     | s1114954@studenti.univpm.it | [fedeStaffo](https://github.com/fedeStaffo)    |
-| Enrico Maria Sardellini | s1120355@studenti.univpm.it | [Ems01](https://github.com/Ems01)              |
